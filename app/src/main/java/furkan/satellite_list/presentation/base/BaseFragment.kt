@@ -15,11 +15,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
 
     abstract val viewModel: VM
 
-    open fun observerData() {}
-    open fun clickListeners() {}
-
-    abstract fun viewCreated()
-
     abstract fun layoutResource(inflater: LayoutInflater, container: ViewGroup?): VB
 
     override fun onCreateView(
