@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import furkan.satellite_list.data.satellite.dto.SatelliteModel
-import furkan.satellite_list.domain.satellite.base.SatelliteListMapper
+import furkan.satellite_list.domain.base.SatelliteListMapper
 import furkan.satellite_list.domain.satellite.entity.SatelliteEntity
 import furkan.satellite_list.domain.satellite.mapper.SatelliteEntityMapper
 

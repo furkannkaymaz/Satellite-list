@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import furkan.satellite_list.utils.response.UIStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import furkan.satellite_list.domain.satellite.base.SatelliteListMapper
+import furkan.satellite_list.domain.base.SatelliteListMapper
 import furkan.satellite_list.domain.satellite.entity.SatelliteEntity
 import furkan.satellite_list.domain.satellite.usecase.GetFilteredSatelliteUseCase
 import furkan.satellite_list.domain.satellite.usecase.GetSatelliteUseCase
@@ -54,9 +54,6 @@ class SatelliteViewModel @Inject constructor(
         return _uiState
     }
 
-
-    private val _uiStateSearch: MutableStateFlow<Resource<List<SatelliteUiData>>> = MutableStateFlow(Resource.Loading(UIStatus.LOADING))
-
     fun getSearchedSatellite(keyword : String): StateFlow<Resource<List<SatelliteUiData>>> {
         viewModelScope.launchOnIO {
 
@@ -81,6 +78,6 @@ class SatelliteViewModel @Inject constructor(
                 }
             }
         }
-        return _uiStateSearch
+        return _uiState
     }
 }

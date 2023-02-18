@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import furkan.satellite_list.utils.extensions.toast
@@ -15,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import furkan.satellite_list.R
 import furkan.satellite_list.databinding.FragmentSatelliteBinding
 import furkan.satellite_list.presentation.base.BaseFragment
+import furkan.satellite_list.presentation.detail.ui.SatelliteDetailFragment
+import furkan.satellite_list.presentation.detail.ui.SatelliteDetailFragmentArgs
 import furkan.satellite_list.presentation.satellite.adapter.SatelliteAdapter
 import furkan.satellite_list.utils.extensions.listen
 import furkan.satellite_list.utils.helper.isSearchable
@@ -39,10 +43,10 @@ class SatelliteFragment : BaseFragment<FragmentSatelliteBinding, SatelliteViewMo
                         requireContext() toast "SUCCESS"
                     }
                     UIStatus.ERROR -> {
-                        requireContext() toast getString(R.string.errorMessage)
+
                     }
                     UIStatus.LOADING -> {
-                        requireContext() toast "Loading"
+                        requireContext() toast "LOADING"
                     }
                 }
             }
@@ -53,7 +57,7 @@ class SatelliteFragment : BaseFragment<FragmentSatelliteBinding, SatelliteViewMo
 
         satelliteAdapter = SatelliteAdapter()
         satelliteAdapter.setOnClick {
-
+            goDetailPage(it)
         }
 
         binding?.rvSatellite?.adapter = satelliteAdapter
@@ -68,23 +72,15 @@ class SatelliteFragment : BaseFragment<FragmentSatelliteBinding, SatelliteViewMo
             if (!isSearchable(it)){
                 return@handleSearchText
             }
-            lifecycleScope.launch {
-                viewModel.getSearchedSatellite(it).listen {
-                    when (it.state) {
-                        UIStatus.SUCCESS -> {
-                            satelliteAdapter.submitList(it.data)
-                            requireContext() toast "SUCCESS"
-                        }
-                        UIStatus.ERROR -> {
-                            requireContext() toast getString(R.string.errorMessage)
-                        }
-                        UIStatus.LOADING -> {
-                            requireContext() toast "Loading"
-                        }
-                    }
-                }
-            }
+            viewModel.getSearchedSatellite(it)
         }
+    }
+
+    private fun goDetailPage(id: Int) {
+        findNavController().navigate(
+            R.id.action_satelliteFragment_to_satelliteDetailFragment,
+            SatelliteDetailFragmentArgs(id).toBundle()
+        )
     }
 
     override fun layoutResource(

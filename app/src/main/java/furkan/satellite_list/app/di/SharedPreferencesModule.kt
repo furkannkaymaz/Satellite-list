@@ -1,4 +1,4 @@
-package furkan.satellite_list.data.satellite.di
+package furkan.satellite_list.app.di
 
 import android.content.Context
 import android.content.SharedPreferences

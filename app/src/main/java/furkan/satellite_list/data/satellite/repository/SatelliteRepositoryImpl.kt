@@ -25,10 +25,10 @@ class SatelliteRepositoryImpl @Inject constructor(
         ).toList()
 
         return withContext(Dispatchers.IO) {
-            try {
+            if (satelliteList.isNotEmpty()){
                 Resource.Success(satelliteList, UIStatus.SUCCESS)
-            } catch (throwable: Throwable) {
-                Resource.Error("Something Went Wrong", UIStatus.ERROR)
+            }else{
+                Resource.Error(context.getString(R.string.errorMessage), UIStatus.ERROR)
             }
         }
     }

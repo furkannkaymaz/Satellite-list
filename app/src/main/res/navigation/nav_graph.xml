@@ -9,5 +9,19 @@
         android:id="@+id/satelliteFragment"
         android:name="furkan.satellite_list.presentation.satellite.ui.SatelliteFragment"
         android:label="fragment_satellite"
-        tools:layout="@layout/fragment_satellite" />
+        tools:layout="@layout/fragment_satellite" >
+        <action
+            android:id="@+id/action_satelliteFragment_to_satelliteDetailFragment"
+            app:destination="@id/satelliteDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/satelliteDetailFragment"
+        android:name="furkan.satellite_list.presentation.detail.ui.SatelliteDetailFragment"
+        android:label="fragment_satellite_detail"
+        tools:layout="@layout/fragment_satellite_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>

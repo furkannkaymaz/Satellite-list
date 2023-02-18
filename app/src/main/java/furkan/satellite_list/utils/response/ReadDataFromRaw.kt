@@ -6,7 +6,7 @@ import furkan.satellite_list.R
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-fun readDataFromRaw(context : Context,@RawRes res : Int ) : String{
+fun readDataFromRaw(context: Context, @RawRes res: Int): String {
     val inputStream = context.resources.openRawResource(res)
     val bufferedReader = BufferedReader(InputStreamReader(inputStream))
     val jsonString = StringBuilder().apply {
