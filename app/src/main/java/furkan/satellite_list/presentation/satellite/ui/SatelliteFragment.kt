@@ -51,7 +51,8 @@ class SatelliteFragment : BaseFragment<FragmentSatelliteBinding, SatelliteViewMo
 
     private fun setAdapter() {
 
-        satelliteAdapter = SatelliteAdapter {
+        satelliteAdapter = SatelliteAdapter()
+        satelliteAdapter.setOnClick {
 
         }
 

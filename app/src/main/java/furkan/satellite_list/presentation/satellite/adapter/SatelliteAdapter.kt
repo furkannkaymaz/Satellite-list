@@ -11,16 +11,22 @@ import furkan.satellite_list.presentation.base.BaseAdapter
 import furkan.satellite_list.presentation.satellite.ui.SatelliteUiData
 import furkan.satellite_list.utils.adapter.getDiffUtilCallBack
 
-class SatelliteAdapter(var onClick: (Int) -> Unit) :
+class SatelliteAdapter() :
     BaseAdapter<SatelliteUiData, RecyclerView.ViewHolder>(
         getDiffUtilCallBack()
     ) {
+
+    private var onClick: ((Int) -> Unit)? = null
     private lateinit var bindingItemSatelliteBinding: ItemSatelliteBinding
 
     override fun bindView(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as SatelliteViewHolder).bind(currentList[position]) {
-            onClick.invoke(it.id)
+            onClick?.invoke(it.id)
         }
+    }
+
+    fun setOnClick(onViewClick: (Int) -> Unit) {
+        onClick = onViewClick
     }
 
     override fun createView(
