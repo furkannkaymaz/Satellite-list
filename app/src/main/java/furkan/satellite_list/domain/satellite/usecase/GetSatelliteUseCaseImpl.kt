@@ -22,7 +22,9 @@ class GetSatelliteUseCaseImpl @Inject constructor(
                 is Resource.Error -> {
                     emit(Resource.Error("Error", response.state))
                 }
-                else -> Unit
+                is Resource.Loading -> {
+                    emit(Resource.Loading(response.state))
+                }
             }
 
         }

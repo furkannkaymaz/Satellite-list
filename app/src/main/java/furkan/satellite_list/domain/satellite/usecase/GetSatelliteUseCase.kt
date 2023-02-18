@@ -7,3 +7,4 @@ import kotlinx.coroutines.flow.Flow
 interface GetSatelliteUseCase {
     operator fun invoke() : Flow<Resource<List<SatelliteEntity>>>
 }
+

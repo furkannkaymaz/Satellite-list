@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_border_view"
+    android:orientation="horizontal"
+    android:padding="4dp">
 
     <ImageView
-        android:id="@+id/search_icon"
+        android:id="@+id/ivSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_search" />
+        android:src="@drawable/ic_search"
+        android:contentDescription="@string/search" />
 
     <EditText
-        android:id="@+id/search_edit_text"
+        android:id="@+id/etSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="Search" />
+        android:backgroundTint="@color/black"
+        android:hint="@string/search"
+        android:shadowColor="@color/black"
+        android:importantForAutofill="no"
+        android:inputType="text" />
 
 </LinearLayout>

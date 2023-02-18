@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import furkan.satellite_list.domain.satellite.usecase.GetFilteredSatelliteUseCase
+import furkan.satellite_list.domain.satellite.usecase.GetFilteredSatelliteUseCaseImpl
 import furkan.satellite_list.domain.satellite.usecase.GetSatelliteUseCase
 import furkan.satellite_list.domain.satellite.usecase.GetSatelliteUseCaseImpl
 
@@ -13,4 +15,7 @@ interface UseCaseModule {
 
     @Binds
     fun bindGetSatelliteUseCase(getSatelliteUseCase: GetSatelliteUseCaseImpl): GetSatelliteUseCase
+
+    @Binds
+    fun bindGetFilteredSatelliteUseCase(hetFilteredSatelliteUseCaseImpl: GetFilteredSatelliteUseCaseImpl): GetFilteredSatelliteUseCase
 }
