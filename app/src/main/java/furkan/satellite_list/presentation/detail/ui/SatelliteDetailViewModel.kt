@@ -11,9 +11,12 @@ import furkan.satellite_list.domain.detail.usecase.GetSatellitePositionUseCase
 import furkan.satellite_list.utils.extensions.launchOnIO
 import furkan.satellite_list.utils.response.Resource
 import furkan.satellite_list.utils.response.UIStatus
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +28,8 @@ class SatelliteDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<Resource<SatelliteDetailUiData>> = MutableStateFlow(
-        Resource.Loading(UIStatus.LOADING))
+        Resource.Loading(UIStatus.LOADING)
+    )
 
     fun getSatelliteDetail(id: Int): StateFlow<Resource<SatelliteDetailUiData>> {
 
@@ -57,8 +61,10 @@ class SatelliteDetailViewModel @Inject constructor(
         return _uiState
     }
 
-    private val _uiStatePosition: MutableStateFlow<Resource<SatellitePositionUiData>> = MutableStateFlow(
-        Resource.Loading(UIStatus.LOADING))
+    private val _uiStatePosition: MutableStateFlow<Resource<SatellitePositionUiData>> =
+        MutableStateFlow(
+            Resource.Loading(UIStatus.LOADING)
+        )
 
     fun getSatellitePosition(id: Int): StateFlow<Resource<SatellitePositionUiData>> {
 
@@ -66,7 +72,12 @@ class SatelliteDetailViewModel @Inject constructor(
             getSatellitePositionUseCase(id).collectLatest {
                 when (it) {
                     is Resource.Success -> {
-                        _uiStatePosition.emit(Resource.Success(mapperPosition.map(it.data!!), it.state))
+                        _uiStatePosition.emit(
+                            Resource.Success(
+                                mapperPosition.map(it.data!!),
+                                it.state
+                            )
+                        )
                     }
                     is Resource.Error -> {
                         _uiStatePosition.emit(
@@ -83,7 +94,34 @@ class SatelliteDetailViewModel @Inject constructor(
                             )
                         )
                     }
-
+                }
+                while (true) {
+                    delay(3000)
+                    when (it) {
+                        is Resource.Success -> {
+                            _uiStatePosition.emit(
+                                Resource.Success(
+                                    mapperPosition.map(it.data!!),
+                                    it.state
+                                )
+                            )
+                        }
+                        is Resource.Error -> {
+                            _uiStatePosition.emit(
+                                Resource.Error(
+                                    it.message,
+                                    it.state
+                                )
+                            )
+                        }
+                        is Resource.Loading -> {
+                            _uiStatePosition.emit(
+                                Resource.Loading(
+                                    UIStatus.LOADING
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -16,16 +16,16 @@ class SatelliteAdapter() :
         getDiffUtilCallBack()
     ) {
 
-    private var onClick: ((Int) -> Unit)? = null
+    private var onClick: ((SatelliteUiData) -> Unit)? = null
     private lateinit var bindingItemSatelliteBinding: ItemSatelliteBinding
 
     override fun bindView(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as SatelliteViewHolder).bind(currentList[position]) {
-            onClick?.invoke(it.id)
+            onClick?.invoke(it)
         }
     }
 
-    fun setOnClick(onViewClick: (Int) -> Unit) {
+    fun setOnClick(onViewClick: (SatelliteUiData) -> Unit) {
         onClick = onViewClick
     }
 

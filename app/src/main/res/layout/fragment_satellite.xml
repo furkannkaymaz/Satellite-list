@@ -8,6 +8,19 @@
     android:orientation="vertical"
     tools:context=".presentation.satellite.ui.SatelliteFragment">
 
+    <FrameLayout
+        android:id="@+id/flProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+
     <furkan.satellite_list.utils.components.CustomSearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"

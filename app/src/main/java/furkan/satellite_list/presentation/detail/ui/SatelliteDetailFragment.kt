@@ -1,6 +1,8 @@
 package furkan.satellite_list.presentation.detail.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,16 +17,20 @@ import furkan.satellite_list.databinding.FragmentSatelliteDetailBinding
 import furkan.satellite_list.presentation.base.BaseFragment
 import furkan.satellite_list.utils.extensions.listen
 import furkan.satellite_list.utils.extensions.toast
+import furkan.satellite_list.utils.helper.hide
+import furkan.satellite_list.utils.helper.show
 import furkan.satellite_list.utils.response.UIStatus
+import kotlinx.android.synthetic.main.fragment_satellite.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SatelliteDetailFragment : BaseFragment<FragmentSatelliteDetailBinding,SatelliteDetailViewModel>() {
+class SatelliteDetailFragment :
+    BaseFragment<FragmentSatelliteDetailBinding, SatelliteDetailViewModel>() {
 
     override val viewModel: SatelliteDetailViewModel by viewModels()
     private val args: SatelliteDetailFragmentArgs by navArgs()
-    var satelliteId : Int = 0
+    var satelliteId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +45,14 @@ class SatelliteDetailFragment : BaseFragment<FragmentSatelliteDetailBinding,Sate
             viewModel.getSatelliteDetail(satelliteId).collectLatest {
                 when (it.state) {
                     UIStatus.SUCCESS -> {
-                        Log.d("data1",it.data?.first_flight.toString())
+                        configureDetail(it.data)
+                        flProgress.hide()
                     }
                     UIStatus.ERROR -> {
-
+                        requireContext() toast getString(R.string.errorMessage)
                     }
                     UIStatus.LOADING -> {
-
+                        flProgress.show()
                     }
                 }
             }
@@ -56,15 +63,45 @@ class SatelliteDetailFragment : BaseFragment<FragmentSatelliteDetailBinding,Sate
             viewModel.getSatellitePosition(satelliteId).collectLatest {
                 when (it.state) {
                     UIStatus.SUCCESS -> {
-                        Log.d("data1",it.data?.positions?.get(0)?.posY.toString())
+                        configurePosition(it.data)
+                        flProgress.hide()
                     }
                     UIStatus.ERROR -> {
-
+                        requireContext() toast getString(R.string.errorMessage)
                     }
                     UIStatus.LOADING -> {
+                        flProgress.show()
                     }
                 }
             }
+        }
+    }
+
+
+    private fun configureDetail(data: SatelliteDetailUiData?) {
+        binding?.apply {
+            tvName.text = args.name
+            tvDate.text = data?.first_flight
+            tvHeightMass.text = Html.fromHtml(
+                "<b>${getString(R.string.heightMass)}</b> :${data?.height} / ${data?.mass}",
+                0
+            )
+            tvCost.text = Html.fromHtml(
+                "<b>${getString(R.string.cost)}</b> : ${data?.cost_per_launch}",
+                0
+            )
+        }
+    }
+
+
+    private fun configurePosition(data: SatellitePositionUiData?) {
+        binding?.apply {
+            tvLastPosition.text = Html.fromHtml(
+                "<b>${getString(R.string.lastPosition)}</b> : (${data?.positions?.get(0)?.posX},${
+                    data?.positions?.get(0)?.posY
+                })"
+            )
+
         }
     }
 
@@ -72,6 +109,6 @@ class SatelliteDetailFragment : BaseFragment<FragmentSatelliteDetailBinding,Sate
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentSatelliteDetailBinding {
-        return FragmentSatelliteDetailBinding.inflate(inflater,container,false)
+        return FragmentSatelliteDetailBinding.inflate(inflater, container, false)
     }
 }
