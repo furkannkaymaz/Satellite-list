@@ -36,21 +36,10 @@ class SatelliteDetailFragment : BaseFragment<FragmentSatelliteDetailBinding,Sate
 
         lifecycleScope.launch {
 
-            viewModel.getSatellitePosition(satelliteId).listen {
-                it.data?.toString()?.let { it1 -> Log.d("data123", it1) }
+            viewModel.getSatelliteDetail(satelliteId).collectLatest {
                 when (it.state) {
                     UIStatus.SUCCESS -> {
-                    }
-                    UIStatus.ERROR -> {
-
-                    }
-                    UIStatus.LOADING -> {
-                    }
-                }
-            }
-            viewModel.getSatelliteDetail(satelliteId).listen {
-                when (it.state) {
-                    UIStatus.SUCCESS -> {
+                        Log.d("data1",it.data?.first_flight.toString())
                     }
                     UIStatus.ERROR -> {
 
@@ -61,6 +50,21 @@ class SatelliteDetailFragment : BaseFragment<FragmentSatelliteDetailBinding,Sate
                 }
             }
 
+        }
+
+        lifecycleScope.launch {
+            viewModel.getSatellitePosition(satelliteId).collectLatest {
+                when (it.state) {
+                    UIStatus.SUCCESS -> {
+                        Log.d("data1",it.data?.positions?.get(0)?.posY.toString())
+                    }
+                    UIStatus.ERROR -> {
+
+                    }
+                    UIStatus.LOADING -> {
+                    }
+                }
+            }
         }
     }
 
