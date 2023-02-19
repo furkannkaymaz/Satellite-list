@@ -1,7 +1,7 @@
 package furkan.satellite_list.presentation.satellite.ui
 
 data class SatelliteUiData(
-    val id : Int,
+    var id : Int,
     val active : Boolean,
     val name : String,
 )
