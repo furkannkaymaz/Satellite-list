@@ -3,11 +3,14 @@ package furkan.satellite_list.presentation.detail.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import furkan.satellite_list.data.detail.dto.SatelliteDetailModel
+import furkan.satellite_list.data.detail.repository.SatelliteDetailRepository
 import furkan.satellite_list.domain.base.SatelliteMapper
 import furkan.satellite_list.domain.detail.entity.SatelliteDetailEntity
 import furkan.satellite_list.domain.detail.entity.SatellitePositionEntity
 import furkan.satellite_list.domain.detail.usecase.GetSatelliteDetailUseCase
 import furkan.satellite_list.domain.detail.usecase.GetSatellitePositionUseCase
+import furkan.satellite_list.presentation.satellite.ui.SatelliteUiData
 import furkan.satellite_list.utils.extensions.launchOnIO
 import furkan.satellite_list.utils.response.Resource
 import furkan.satellite_list.utils.response.UIStatus
@@ -24,7 +27,8 @@ class SatelliteDetailViewModel @Inject constructor(
     private val getSatelliteDetailUseCase: GetSatelliteDetailUseCase,
     private val getSatellitePositionUseCase: GetSatellitePositionUseCase,
     private val mapper: SatelliteMapper<SatelliteDetailEntity, SatelliteDetailUiData>,
-    private val mapperPosition: SatelliteMapper<SatellitePositionEntity, SatellitePositionUiData>
+    private val mapperPosition: SatelliteMapper<SatellitePositionEntity, SatellitePositionUiData>,
+    private val satelliteDetailRepository: SatelliteDetailRepository,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<Resource<SatelliteDetailUiData>> = MutableStateFlow(
@@ -126,5 +130,16 @@ class SatelliteDetailViewModel @Inject constructor(
             }
         }
         return _uiStatePosition
+    }
+
+    suspend fun addSatelliteDetail(satelliteDetailUiData: SatelliteDetailUiData) {
+        satelliteDetailRepository.saveDetail(
+            SatelliteDetailModel(
+                satelliteDetailUiData.id,
+                satelliteDetailUiData.cost_per_launch,
+                satelliteDetailUiData.first_flight,
+                satelliteDetailUiData.height,
+                satelliteDetailUiData.mass
+            ))
     }
 }

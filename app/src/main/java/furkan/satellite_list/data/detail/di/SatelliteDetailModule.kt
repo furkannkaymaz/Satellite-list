@@ -5,7 +5,10 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import furkan.satellite_list.app.di.IoDispatcher
+import furkan.satellite_list.data.detail.db.SatelliteDetailDao
 import furkan.satellite_list.data.detail.repository.SatelliteDetailRepository
 import furkan.satellite_list.data.detail.repository.SatelliteDetailRepositoryImpl
 import furkan.satellite_list.data.detail.repository.SatellitePositionRepository
@@ -13,6 +16,7 @@ import furkan.satellite_list.data.detail.repository.SatellitePositionRepositoryI
 import furkan.satellite_list.data.detail.source.SatelliteDetailDataSource
 import furkan.satellite_list.data.detail.source.SatellitePositionDataSource
 import furkan.satellite_list.data.satellite.sources.SatelliteDataSources
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -22,25 +26,28 @@ class SatelliteDetailModule {
     @Singleton
     @Provides
     fun provideSatelliteDetailRepository(
-        context: Context,
-        satelliteDetailDataSource: SatelliteDetailDataSource
+        @ApplicationContext context: Context,
+        satelliteDetailDataSource: SatelliteDetailDataSource,
+        satelliteDetailDao: SatelliteDetailDao,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): SatelliteDetailRepository {
-        return SatelliteDetailRepositoryImpl(context, satelliteDetailDataSource)
+        return SatelliteDetailRepositoryImpl(context, satelliteDetailDataSource,satelliteDetailDao,ioDispatcher)
     }
 
     @Singleton
     @Provides
     fun provideSatellitePositionRepository(
-        context: Context,
-        satellitePositionDataSource: SatellitePositionDataSource
+        @ApplicationContext context: Context,
+        satellitePositionDataSource: SatellitePositionDataSource,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): SatellitePositionRepository {
-        return SatellitePositionRepositoryImpl(context, satellitePositionDataSource)
+        return SatellitePositionRepositoryImpl(context, satellitePositionDataSource, ioDispatcher)
     }
 
     @Singleton
     @Provides
     fun provideSatellitePositionSources(
-        context: Context,
+        @ApplicationContext context: Context,
         gson: Gson
     ): SatellitePositionDataSource {
         return SatellitePositionDataSource(context, gson)
@@ -49,9 +56,11 @@ class SatelliteDetailModule {
     @Singleton
     @Provides
     fun provideSatelliteDetailSources(
-        context: Context,
-        gson: Gson
+        @ApplicationContext context: Context,
+        gson: Gson,
+        dao: SatelliteDetailDao,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): SatelliteDetailDataSource {
-        return SatelliteDetailDataSource(context, gson)
+        return SatelliteDetailDataSource(context, gson,dao,ioDispatcher)
     }
 }

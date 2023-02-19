@@ -5,4 +5,5 @@ import furkan.satellite_list.utils.response.Resource
 
 interface SatelliteDetailRepository {
     suspend fun getSatelliteDetail(id : Int) : Resource<SatelliteDetailModel?>
+    suspend fun saveDetail(satelliteDetailDatabaseModel: SatelliteDetailModel)
 }

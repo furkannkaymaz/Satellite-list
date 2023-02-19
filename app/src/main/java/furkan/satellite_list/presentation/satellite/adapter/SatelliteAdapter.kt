@@ -2,10 +2,8 @@ package furkan.satellite_list.presentation.satellite.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import furkan.satellite_list.R
 import furkan.satellite_list.databinding.ItemSatelliteBinding
 import furkan.satellite_list.presentation.base.BaseAdapter
 import furkan.satellite_list.presentation.satellite.ui.SatelliteUiData
@@ -23,6 +21,7 @@ class SatelliteAdapter() :
         (holder as SatelliteViewHolder).bind(currentList[position]) {
             onClick?.invoke(it)
         }
+        holder.configureView(position == itemCount -1)
     }
 
     fun setOnClick(onViewClick: (SatelliteUiData) -> Unit) {

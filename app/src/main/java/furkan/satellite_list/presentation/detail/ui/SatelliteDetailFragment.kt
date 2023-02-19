@@ -47,6 +47,7 @@ class SatelliteDetailFragment :
                     UIStatus.SUCCESS -> {
                         configureDetail(it.data)
                         flProgress.hide()
+                        viewModel.addSatelliteDetail(it.data!!)
                     }
                     UIStatus.ERROR -> {
                         requireContext() toast getString(R.string.errorMessage)

@@ -1,5 +1,6 @@
 package furkan.satellite_list.presentation.satellite.adapter
 
+import android.view.View
 import furkan.satellite_list.R
 import furkan.satellite_list.databinding.ItemSatelliteBinding
 import furkan.satellite_list.presentation.base.BaseViewHolder
@@ -21,6 +22,7 @@ class SatelliteViewHolder(
                 tvStatus.text = isActive(data.active)
                 tvName.setTypeFace(TextStyle.BOLD)
                 tvStatus.setTypeFace(TextStyle.BOLD)
+                ivStatus.setImageResource(R.drawable.ic_active)
             }
         } else {
             binding.apply {
@@ -28,11 +30,18 @@ class SatelliteViewHolder(
                 tvStatus.text = isActive(data.active)
                 tvName.setTypeFace(TextStyle.NORMAL)
                 tvStatus.setTypeFace(TextStyle.NORMAL)
+                ivStatus.setImageResource(R.drawable.ic_passive)
             }
         }
 
         binding.llContainer.setOnClickListener {
             onItemClick.invoke(data)
+        }
+    }
+
+    fun configureView(isLastPosition: Boolean){
+        if (isLastPosition){
+            binding.view.visibility = View.GONE
         }
     }
 }
