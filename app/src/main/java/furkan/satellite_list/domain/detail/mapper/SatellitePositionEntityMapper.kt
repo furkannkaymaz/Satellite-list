@@ -10,9 +10,9 @@ class SatellitePositionEntityMapper @Inject constructor() :
     SatelliteMapper<SatellitePositionModel, SatellitePositionEntity> {
     override fun map(input: SatellitePositionModel): SatellitePositionEntity {
         return SatellitePositionEntity(
-            input.id,
+            input.id!!,
             input.positions.map {
-                PositionEntityModel(it.posX,it.posY)
+                PositionEntityModel(it?.posX ?: 0.0 ,it?.posY ?: 0.0)
             }
         )
     }

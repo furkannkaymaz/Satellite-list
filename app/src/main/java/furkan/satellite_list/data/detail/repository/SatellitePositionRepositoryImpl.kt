@@ -22,9 +22,10 @@ class SatellitePositionRepositoryImpl @Inject constructor(
     override suspend fun getSatellitePosition(id: Int): Resource<SatellitePositionModel?> {
         return withContext(ioDispatcher) {
             val data = satellitePositionDataSource.getSatellitePositionList()
-            if (data.isNotEmpty()){
-                Resource.Success(data[id.toString()], UIStatus.SUCCESS)
-            }else{
+            val satellite = data[id.toString()]
+            if (satellite != null) {
+                Resource.Success(satellite, UIStatus.SUCCESS)
+            } else {
                 Resource.Error(context.getString(R.string.errorMessage), UIStatus.ERROR)
             }
         }

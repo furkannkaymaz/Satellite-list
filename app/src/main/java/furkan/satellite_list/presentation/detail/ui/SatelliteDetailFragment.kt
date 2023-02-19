@@ -42,7 +42,7 @@ class SatelliteDetailFragment :
 
         lifecycleScope.launch {
 
-            viewModel.getSatelliteDetail(satelliteId).collectLatest {
+            viewModel.getSatelliteDetailAndPosition(satelliteId).first.collectLatest {
                 when (it.state) {
                     UIStatus.SUCCESS -> {
                         configureDetail(it.data)
@@ -51,24 +51,26 @@ class SatelliteDetailFragment :
                     }
                     UIStatus.ERROR -> {
                         requireContext() toast getString(R.string.errorMessage)
+                        flProgress.show()
                     }
                     UIStatus.LOADING -> {
                         flProgress.show()
                     }
                 }
             }
-
         }
 
         lifecycleScope.launch {
-            viewModel.getSatellitePosition(satelliteId).collectLatest {
+            viewModel.getSatelliteDetailAndPosition(satelliteId).second.collectLatest {
                 when (it.state) {
                     UIStatus.SUCCESS -> {
+                        Log.d("deneme","dneme")
                         configurePosition(it.data)
                         flProgress.hide()
                     }
                     UIStatus.ERROR -> {
                         requireContext() toast getString(R.string.errorMessage)
+                        flProgress.show()
                     }
                     UIStatus.LOADING -> {
                         flProgress.show()
@@ -76,6 +78,7 @@ class SatelliteDetailFragment :
                 }
             }
         }
+
     }
 
 

@@ -21,13 +21,12 @@ class SatelliteDetailRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : SatelliteDetailRepository {
     override suspend fun getSatelliteDetail(id: Int): Resource<SatelliteDetailModel?> {
-
         val data = satelliteDetailDataSource.getSatelliteDetail(id)
-
         return withContext(ioDispatcher) {
-            if (data.isNotEmpty()){
-                Resource.Success(data[id], UIStatus.SUCCESS)
-            }else{
+            val satellite = data[id]
+            if (satellite != null) {
+                Resource.Success(satellite, UIStatus.SUCCESS)
+            } else {
                 Resource.Error(context.getString(R.string.errorMessage), UIStatus.ERROR)
             }
         }

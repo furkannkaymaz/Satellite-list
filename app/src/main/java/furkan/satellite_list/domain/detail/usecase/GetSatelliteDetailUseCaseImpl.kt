@@ -19,7 +19,7 @@ class GetSatelliteDetailUseCaseImpl @Inject constructor(
 ) : GetSatelliteDetailUseCase {
     override fun invoke(id: Int): Flow<Resource<SatelliteDetailEntity?>> =   flow{
         when (val response = satelliteDetailRepository.getSatelliteDetail(id)) {
-            is Resource.Success<*> -> {
+            is Resource.Success -> {
                 emit(Resource.Success(response.data?.let { mapper.map(it) }, response.state))
             }
             is Resource.Error -> {

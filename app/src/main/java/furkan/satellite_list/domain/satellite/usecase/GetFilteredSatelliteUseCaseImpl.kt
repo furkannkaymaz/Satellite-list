@@ -20,8 +20,8 @@ class GetFilteredSatelliteUseCaseImpl @Inject constructor(
         keyword: String,
     ): Flow<Resource<List<SatelliteEntity>>> = flow {
         when (val response = satelliteRepository.getSatelliteList()) {
-            is Resource.Success<*> -> {
-                val filteredList = response.data?.filter { it.name.contains(keyword,true) }
+            is Resource.Success -> {
+                val filteredList = response.data?.filter { it.name!!.contains(keyword,true) }
                 emit(Resource.Success(mapper.map(filteredList!!), response.state))
             }
             is Resource.Error -> {

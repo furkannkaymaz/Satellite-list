@@ -20,7 +20,7 @@ class SatellitePositionDataSource @Inject constructor(
                 Array<SatellitePositionModel>::class.java
             ).toList()
 
-            return@withContext satelliteDetail.associateBy { it.id }
+            return@withContext satelliteDetail.associateBy { it.id.toString() }
         }
     }
 }

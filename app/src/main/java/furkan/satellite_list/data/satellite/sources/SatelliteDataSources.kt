@@ -7,7 +7,6 @@ import furkan.satellite_list.app.di.IoDispatcher
 import furkan.satellite_list.data.satellite.dto.SatelliteModel
 import furkan.satellite_list.utils.response.readDataFromRaw
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -17,8 +16,8 @@ class SatelliteDataSources @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
     suspend fun getSatelliteList(): List<SatelliteModel> {
-        return withContext(ioDispatcher){
-            gson.fromJson(
+        return withContext(ioDispatcher) {
+            return@withContext gson.fromJson(
                 readDataFromRaw(context, R.raw.satellite),
                 Array<SatelliteModel>::class.java
             ).toList()

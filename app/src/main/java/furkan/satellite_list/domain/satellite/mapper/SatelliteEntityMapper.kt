@@ -10,9 +10,9 @@ class SatelliteEntityMapper @Inject constructor() :
     override fun map(input: List<SatelliteModel>): List<SatelliteEntity> {
         return input.map {
             SatelliteEntity(
-                it.id,
-                it.active,
-                it.name
+                it.id!!,
+                it.active ?: false,
+                it.name ?: ""
             )
         }
     }

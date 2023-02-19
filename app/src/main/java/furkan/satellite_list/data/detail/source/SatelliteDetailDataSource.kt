@@ -31,7 +31,7 @@ class SatelliteDetailDataSource @Inject constructor(
                     Array<SatelliteDetailModel>::class.java
                 ).toList()
 
-                return@withContext satelliteDetail.associateBy { it.id }
+                return@withContext satelliteDetail.associateBy { it.id ?: -1 }
             }
         }
     }

@@ -10,11 +10,11 @@ class SatelliteDetailEntityMapper @Inject constructor() :
     SatelliteMapper<SatelliteDetailModel, SatelliteDetailEntity> {
     override fun map(input: SatelliteDetailModel): SatelliteDetailEntity {
         return SatelliteDetailEntity(
-            input.id,
-            input.cost_per_launch,
-            input.first_flight,
-            input.height,
-            input.mass
+            input.id!!,
+            input.cost_per_launch ?: 0,
+            input.first_flight ?: "",
+            input.height?: 0,
+            input.mass?: 0
         )
     }
 }

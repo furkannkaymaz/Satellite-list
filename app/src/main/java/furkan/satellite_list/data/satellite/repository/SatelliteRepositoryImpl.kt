@@ -25,10 +25,13 @@ class SatelliteRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             val data = satelliteDataSources.getSatelliteList()
 
-            if (data.isNotEmpty()) {
+            if (data.all { it.id != null }) {
                 Resource.Success(data, UIStatus.SUCCESS)
             } else {
-                Resource.Error(context.getString(R.string.errorMessage), UIStatus.ERROR)
+                Resource.Error(
+                    context.getString(R.string.errorMessage),
+                    UIStatus.ERROR
+                )
             }
         }
     }
