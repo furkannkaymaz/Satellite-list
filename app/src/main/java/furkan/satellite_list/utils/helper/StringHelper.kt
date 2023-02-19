@@ -6,7 +6,7 @@ import furkan.satellite_list.R
 import furkan.satellite_list.app.MyApplication
 
 fun isSearchable(input: String): Boolean {
-    val letterCount = input.count { it.isLetter() }
+    val letterCount = input.count()
 
     return letterCount == 0 || letterCount > 2
 }
@@ -19,7 +19,7 @@ fun isActive(status: Boolean): String {
     }
 }
 
-fun TextView.setTypeFace(style: TextStyle,){
+fun TextView.setTypeFace(style: TextStyle) {
     when (style) {
         TextStyle.NORMAL -> {
             this.setTypeface(null, Typeface.NORMAL)

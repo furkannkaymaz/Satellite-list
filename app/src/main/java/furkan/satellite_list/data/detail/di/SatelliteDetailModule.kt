@@ -15,7 +15,6 @@ import furkan.satellite_list.data.detail.repository.SatellitePositionRepository
 import furkan.satellite_list.data.detail.repository.SatellitePositionRepositoryImpl
 import furkan.satellite_list.data.detail.source.SatelliteDetailDataSource
 import furkan.satellite_list.data.detail.source.SatellitePositionDataSource
-import furkan.satellite_list.data.satellite.sources.SatelliteDataSources
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
@@ -31,7 +30,12 @@ class SatelliteDetailModule {
         satelliteDetailDao: SatelliteDetailDao,
         @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): SatelliteDetailRepository {
-        return SatelliteDetailRepositoryImpl(context, satelliteDetailDataSource,satelliteDetailDao,ioDispatcher)
+        return SatelliteDetailRepositoryImpl(
+            context,
+            satelliteDetailDataSource,
+            satelliteDetailDao,
+            ioDispatcher
+        )
     }
 
     @Singleton
@@ -61,6 +65,6 @@ class SatelliteDetailModule {
         dao: SatelliteDetailDao,
         @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): SatelliteDetailDataSource {
-        return SatelliteDetailDataSource(context, gson,dao,ioDispatcher)
+        return SatelliteDetailDataSource(context, gson, dao, ioDispatcher)
     }
 }

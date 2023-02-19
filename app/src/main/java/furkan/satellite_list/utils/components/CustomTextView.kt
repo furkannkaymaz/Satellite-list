@@ -33,7 +33,7 @@ class CustomTextView @JvmOverloads constructor(
 
     override fun setTextSize(unit: Int, size: Float) {
         super.setTextSize(unit, size)
-        setTextSize(TypedValue.COMPLEX_UNIT_SP,16F)
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
     }
 
 

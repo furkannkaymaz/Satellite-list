@@ -8,9 +8,7 @@ import furkan.satellite_list.data.detail.dto.SatelliteDetailModel
 import furkan.satellite_list.data.detail.source.SatelliteDetailDataSource
 import furkan.satellite_list.utils.response.Resource
 import furkan.satellite_list.utils.response.UIStatus
-import kotlinx.coroutines.CloseableCoroutineDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -33,7 +31,7 @@ class SatelliteDetailRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveDetail(satelliteDetailDatabaseModel: SatelliteDetailModel) {
-        withContext(ioDispatcher){
+        withContext(ioDispatcher) {
             satelliteDao.insertSatelliteDetail(satelliteDetailDatabaseModel)
         }
     }

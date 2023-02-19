@@ -10,14 +10,14 @@ import furkan.satellite_list.databinding.ViewSearchBinding
 class CustomSearchView(
     context: Context,
     attrs: AttributeSet? = null,
-) : LinearLayout(context, attrs,) {
+) : LinearLayout(context, attrs) {
 
     private val binding: ViewSearchBinding =
         ViewSearchBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun handleSearchText(search :(String) -> Unit){
+    fun handleSearchText(search: (String) -> Unit) {
         binding.etSearch.addTextChangedListener {
-         search.invoke(it.toString())
+            search.invoke(it.toString())
         }
     }
 }

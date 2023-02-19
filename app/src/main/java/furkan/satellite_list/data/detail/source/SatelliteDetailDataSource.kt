@@ -8,7 +8,6 @@ import furkan.satellite_list.data.detail.db.SatelliteDetailDao
 import furkan.satellite_list.data.detail.dto.SatelliteDetailModel
 import furkan.satellite_list.utils.response.readDataFromRaw
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

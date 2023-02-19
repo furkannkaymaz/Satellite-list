@@ -64,7 +64,6 @@ class SatelliteDetailFragment :
             viewModel.getSatelliteDetailAndPosition(satelliteId).second.collectLatest {
                 when (it.state) {
                     UIStatus.SUCCESS -> {
-                        Log.d("deneme","dneme")
                         configurePosition(it.data)
                         flProgress.hide()
                     }

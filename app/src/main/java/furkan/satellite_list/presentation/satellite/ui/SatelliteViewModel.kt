@@ -22,7 +22,8 @@ class SatelliteViewModel @Inject constructor(
     private val mapper: SatelliteListMapper<SatelliteEntity, SatelliteUiData>
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<Resource<List<SatelliteUiData>>> = MutableStateFlow(Resource.Loading(UIStatus.LOADING))
+    private val _uiState: MutableStateFlow<Resource<List<SatelliteUiData>>> =
+        MutableStateFlow(Resource.Loading(UIStatus.LOADING))
 
     fun getSatellite(): StateFlow<Resource<List<SatelliteUiData>>> {
 
@@ -54,7 +55,7 @@ class SatelliteViewModel @Inject constructor(
         return _uiState
     }
 
-    fun getSearchedSatellite(keyword : String): StateFlow<Resource<List<SatelliteUiData>>> {
+    fun getSearchedSatellite(keyword: String): StateFlow<Resource<List<SatelliteUiData>>> {
         viewModelScope.launchOnIO {
 
             getFilteredSatelliteUseCase(keyword).collectLatest {
@@ -70,7 +71,7 @@ class SatelliteViewModel @Inject constructor(
                             )
                         )
                     }
-                    is Resource.Loading ->{
+                    is Resource.Loading -> {
                         _uiState.emit(
                             Resource.Loading(UIStatus.LOADING)
                         )

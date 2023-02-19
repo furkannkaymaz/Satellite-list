@@ -10,6 +10,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        this.deleteDatabase("satellite_detail_db")
     }
 }

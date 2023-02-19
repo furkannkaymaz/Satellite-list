@@ -7,7 +7,7 @@ import androidx.room.Query
 import furkan.satellite_list.data.detail.dto.SatelliteDetailModel
 
 @Dao
-interface SatelliteDetailDao  {
+interface SatelliteDetailDao {
 
     @Query("SELECT * FROM satellite_details WHERE id = :id")
     suspend fun getSatelliteDetailById(id: Int?): SatelliteDetailModel?

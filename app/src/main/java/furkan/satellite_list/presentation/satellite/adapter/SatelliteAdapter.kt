@@ -21,7 +21,7 @@ class SatelliteAdapter() :
         (holder as SatelliteViewHolder).bind(currentList[position]) {
             onClick?.invoke(it)
         }
-        holder.configureView(position == itemCount -1)
+        holder.configureView(position == itemCount - 1)
     }
 
     fun setOnClick(onViewClick: (SatelliteUiData) -> Unit) {
