@@ -11,9 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +31,6 @@ class SatelliteViewModelTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         repository = FakeSatelliteRepository(getSatelliteFakeData(true))
         useCase = FakeGetSatelliteUseCase(repository, satelliteEntityMapper)
         useCaseFiltered = FakeGetFilteredSatelliteUseCase(repository, satelliteEntityMapper)
@@ -41,7 +38,7 @@ class SatelliteViewModelTest {
     }
 
     @Test
-    fun `get satellite list returns true`() = runTest() {
+    fun `when satellite list is loaded, then it should be displayed in the UI`() = runTest() {
         var data: List<SatelliteUiData>? = null
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(true)))
@@ -51,54 +48,53 @@ class SatelliteViewModelTest {
             }
             assertTrue(data == expectedResult)
         }
-        job.cancel()
+
     }
 
     @Test
-    fun `get satellite list returns false`() = runTest {
+    fun `when satellite list is not loaded, then it should not be displayed in the UI`() = runTest {
         var data: List<SatelliteUiData>? = null
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(false)))
-        val job = launch() {
+        val job = launch(Dispatchers.IO) {
             viewModel.getSatellite().take(2).collect {
                 data = it.data
             }
             assertFalse(data == expectedResult)
         }
-        job.cancel()
+
     }
 
     @Test
-    fun `get satellite list filter returns true`() = runTest {
+    fun` when searching for a satellite, then the filtered list should match`() = runTest {
         val searchValue = "Dra"
         var data: List<SatelliteUiData>? = null
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(true)))
                 .filter { it.name.contains(searchValue, true) }
-        val job = launch() {
+        val job = launch(Dispatchers.IO) {
             viewModel.getSearchedSatellite(searchValue).take(2).collect {
                 data = it.data
             }
             assertTrue(data == expectedResult)
         }
-        job.cancel()
 
     }
 
     @Test
-    fun `get satellite list filter returns false`() = runTest {
+    fun `when searching for a satellite, then the filtered list should not match`() = runTest {
         val searchValue = "Dra"
         var data: List<SatelliteUiData>? = null
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(false)))
                 .filter { it.name.contains(searchValue, true) }
-        val job = launch() {
+        val job = launch(Dispatchers.IO) {
             viewModel.getSearchedSatellite(searchValue).take(2).collect {
                 data = it.data
             }
             assertFalse(data == expectedResult)
         }
-        job.cancel()
+
     }
 }
 

@@ -8,7 +8,7 @@ class FakeSatelliteRepository(private var data: List<SatelliteModel>) : Satellit
     override suspend fun getSatelliteList(): Resource<List<SatelliteModel>> {
         return when {
             data.any { it.id == null } -> {
-                Resource.Error("One or more SatelliteModels have a null id", UIStatus.ERROR)
+                Resource.Error("Error", UIStatus.ERROR)
             }
             else -> {
                 Resource.Success(data, UIStatus.SUCCESS)
