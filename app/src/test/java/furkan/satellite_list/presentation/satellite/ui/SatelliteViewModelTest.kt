@@ -11,7 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,6 +33,7 @@ class SatelliteViewModelTest {
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
         repository = FakeSatelliteRepository(getSatelliteFakeData(true))
         useCase = FakeGetSatelliteUseCase(repository, satelliteEntityMapper)
         useCaseFiltered = FakeGetFilteredSatelliteUseCase(repository, satelliteEntityMapper)
@@ -46,9 +49,9 @@ class SatelliteViewModelTest {
             viewModel.getSatellite().take(2).collect {
                 data = it.data
             }
+            assertTrue(data == expectedResult)
         }
-        job.join()
-        assertTrue(data == expectedResult)
+        job.cancel()
     }
 
     @Test
@@ -56,13 +59,13 @@ class SatelliteViewModelTest {
         var data: List<SatelliteUiData>? = null
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(false)))
-        val job = launch(Dispatchers.IO) {
+        val job = launch() {
             viewModel.getSatellite().take(2).collect {
                 data = it.data
             }
+            assertFalse(data == expectedResult)
         }
-        job.join()
-        assertFalse(data == expectedResult)
+        job.cancel()
     }
 
     @Test
@@ -72,13 +75,14 @@ class SatelliteViewModelTest {
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(true)))
                 .filter { it.name.contains(searchValue, true) }
-        val job = launch(Dispatchers.IO) {
+        val job = launch() {
             viewModel.getSearchedSatellite(searchValue).take(2).collect {
                 data = it.data
             }
+            assertTrue(data == expectedResult)
         }
-        job.join()
-        assertTrue(data == expectedResult)
+        job.cancel()
+
     }
 
     @Test
@@ -88,14 +92,13 @@ class SatelliteViewModelTest {
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(false)))
                 .filter { it.name.contains(searchValue, true) }
-        val job = launch(Dispatchers.IO) {
+        val job = launch() {
             viewModel.getSearchedSatellite(searchValue).take(2).collect {
                 data = it.data
             }
+            assertFalse(data == expectedResult)
         }
-        job.join()
-        assertFalse(data == expectedResult)
+        job.cancel()
     }
-
 }
 

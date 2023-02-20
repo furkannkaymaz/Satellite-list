@@ -17,6 +17,7 @@ import javax.inject.Singleton
 object DataBaseModule {
 
     @Provides
+    @Singleton
     fun provideSatelliteDetailDatabase(@ApplicationContext context: Context): SatelliteDetailDatabase {
         return Room.databaseBuilder(
             context,
@@ -25,6 +26,7 @@ object DataBaseModule {
     }
 
     @Provides
+    @Singleton
     fun provideSatelliteDetailDao(satelliteDetailDatabase: SatelliteDetailDatabase): SatelliteDetailDao {
         return satelliteDetailDatabase.satelliteDetailDao()
     }
