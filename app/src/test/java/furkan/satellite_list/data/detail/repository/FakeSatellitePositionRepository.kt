@@ -7,11 +7,11 @@ import furkan.satellite_list.utils.response.UIStatus
 class FakeSatellitePositionRepository(private var data: SatellitePositionModel) : SatellitePositionRepository {
     override suspend fun getSatellitePosition(id: Int): Resource<SatellitePositionModel?> {
         return when {
-            data.id == null -> {
+            data.id == null || data.id!!.toInt() < 0 -> {
                 Resource.Error("Error", UIStatus.ERROR)
             }
             else -> {
-                Resource.Success(data, UIStatus.SUCCESS)
+                Resource.Success(data, UIStatus.ERROR)
             }
         }
     }

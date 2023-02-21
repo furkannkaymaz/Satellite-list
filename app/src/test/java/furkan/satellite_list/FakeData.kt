@@ -25,7 +25,11 @@ fun getSatelliteDetailFakeData(id: Int): SatelliteDetailModel {
     val fakeData2 = SatelliteDetailModel(3, 100, "05.02.2022", 300, 280)
     val fakeDataList = listOf(fakeData, fakeData1, fakeData2)
 
-    return fakeDataList.find { it.id == id }!!
+    return if (id < 0){
+        SatelliteDetailModel(null,null,null,null,null)
+    }else{
+        fakeDataList.find { it.id == id }!!
+    }
 }
 
 fun getSatellitePositionFakeData(id: Int): SatellitePositionModel {
@@ -34,7 +38,11 @@ fun getSatellitePositionFakeData(id: Int): SatellitePositionModel {
     val fakeData2 = SatellitePositionModel("3", listOf(PositionModel(100.0, 200.0)))
     val fakeDataList = listOf(fakeData, fakeData1, fakeData2)
 
-    return fakeDataList.find { it.id == id.toString() }!!
+    return if (id < 0){
+        SatellitePositionModel(null, listOf(PositionModel(null,null)))
+    }else{
+        fakeDataList.find { it.id == id.toString() }!!
+    }
 }
 
 

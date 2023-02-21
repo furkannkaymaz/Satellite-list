@@ -98,4 +98,34 @@ class SatelliteDetailViewModelTest {
             }
         }
 
+    @Test
+    fun `when getSatelliteDetailAndPosition is called with invalid id, then it should return error result`() = runTest {
+        val id = -1
+        val expectedDetail = null
+        val expectedPosition = null
+        val expectedPair = Pair(
+            Resource.Error(expectedDetail, UIStatus.ERROR),
+            Resource.Error(expectedPosition, UIStatus.ERROR)
+        )
+
+        var detailResult: Int? = null
+        var positionResult: Int? = null
+
+        val result = viewModel.getSatelliteDetailAndPosition(id)
+
+        launch {
+            result.first.take(2).collectLatest {
+                detailResult = it.data?.id
+            }
+        }
+        launch {
+            result.second.take(2).collectLatest {
+                positionResult = it.data?.id?.toInt()
+
+                assertTrue(detailResult == expectedPair.first.data)
+                assertTrue(positionResult == expectedPair.second.data)
+            }
+        }
+    }
+
 }

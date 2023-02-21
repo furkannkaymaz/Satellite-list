@@ -9,10 +9,10 @@ class FakeSatelliteDetailRepository(var data: SatelliteDetailModel?) : Satellite
 
     override suspend fun getSatelliteDetail(id: Int): Resource<SatelliteDetailModel?> {
         data = getSatelliteDetailFakeData(id)
-        return if (data?.id!! >= 0 ) {
+        return if (data?.id != null && id > 0 ) {
             Resource.Success(data, UIStatus.SUCCESS)
         } else {
-            Resource.Error(null, UIStatus.SUCCESS)
+            Resource.Error(null, UIStatus.ERROR)
         }
     }
 
