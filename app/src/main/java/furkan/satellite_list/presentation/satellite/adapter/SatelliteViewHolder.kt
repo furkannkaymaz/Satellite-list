@@ -22,16 +22,18 @@ class SatelliteViewHolder(
                 tvName.text = data.name
                 tvStatus.text = isActive(data.active)
                 tvName.setTypeFace(TextStyle.BOLD)
-                tvStatus.setTypeFace(TextStyle.BOLD)
+                tvStatus.setTypeFace(TextStyle.NORMAL)
                 ivStatus.setImageResource(R.drawable.ic_active)
+                tvName.setTextColor(ContextCompat.getColor(binding.tvName.context, R.color.black));
+                tvStatus.setTextColor(ContextCompat.getColor(binding.tvName.context, R.color.black));
             }
         } else {
             binding.apply {
                 tvName.text = data.name
                 tvStatus.text = isActive(data.active)
                 tvName.setTypeFace(TextStyle.NORMAL)
-                tvName.setTextColor(ContextCompat.getColor(binding.tvName.context, R.color.grayText));
-                tvStatus.setTextColor(ContextCompat.getColor(binding.tvName.context, R.color.grayText));
+                tvName.setTextColor(ContextCompat.getColor(binding.tvName.context, R.color.black));
+                tvStatus.setTextColor(ContextCompat.getColor(binding.tvName.context, R.color.black));
                 tvStatus.setTypeFace(TextStyle.NORMAL)
                 ivStatus.setImageResource(R.drawable.ic_passive)
             }

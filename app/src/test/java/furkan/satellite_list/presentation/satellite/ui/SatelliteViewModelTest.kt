@@ -40,9 +40,11 @@ class SatelliteViewModelTest {
     @Test
     fun `when satellite list is loaded, then it should be displayed in the UI`() = runTest() {
         var data: List<SatelliteUiData>? = null
+
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(true)))
-        val job = launch {
+
+        launch {
             viewModel.getSatellite().take(2).collect {
                 data = it.data
             }
@@ -56,13 +58,12 @@ class SatelliteViewModelTest {
         var data: List<SatelliteUiData>? = null
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(false)))
-        val job = launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             viewModel.getSatellite().take(2).collect {
                 data = it.data
             }
             assertFalse(data == expectedResult)
         }
-
     }
 
     @Test
@@ -72,7 +73,7 @@ class SatelliteViewModelTest {
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(true)))
                 .filter { it.name.contains(searchValue, true) }
-        val job = launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             viewModel.getSearchedSatellite(searchValue).take(2).collect {
                 data = it.data
             }
@@ -88,13 +89,12 @@ class SatelliteViewModelTest {
         val expectedResult =
             satelliteUiMapper.map(satelliteEntityMapper.map(getSatelliteFakeData(false)))
                 .filter { it.name.contains(searchValue, true) }
-        val job = launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             viewModel.getSearchedSatellite(searchValue).take(2).collect {
                 data = it.data
             }
             assertFalse(data == expectedResult)
         }
-
     }
 }
 

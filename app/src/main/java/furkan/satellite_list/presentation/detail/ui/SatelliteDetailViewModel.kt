@@ -42,8 +42,18 @@ class SatelliteDetailViewModel @Inject constructor(
             }.collectLatest { (detailResult, positionResult) ->
                 when {
                     detailResult is Resource.Success && positionResult is Resource.Success -> {
-                        _uiState.emit(Resource.Success(mapper.map(detailResult.data!!), detailResult.state))
-                        _uiStatePosition.emit(Resource.Success(mapperPosition.map(positionResult.data!!), positionResult.state))
+                        _uiState.emit(
+                            Resource.Success(
+                                mapper.map(detailResult.data!!),
+                                detailResult.state
+                            )
+                        )
+                        _uiStatePosition.emit(
+                            Resource.Success(
+                                mapperPosition.map(positionResult.data!!),
+                                positionResult.state
+                            )
+                        )
                     }
                     detailResult is Resource.Error || positionResult is Resource.Error -> {
                         _uiState.emit(Resource.Error("Error Message", detailResult.state))
@@ -58,10 +68,20 @@ class SatelliteDetailViewModel @Inject constructor(
                 while (true) {
                     when {
                         detailResult is Resource.Success && positionResult is Resource.Success -> {
-                            _uiStatePosition.emit(Resource.Success(mapperPosition.map(positionResult.data!!), positionResult.state))
+                            _uiStatePosition.emit(
+                                Resource.Success(
+                                    mapperPosition.map(positionResult.data!!),
+                                    positionResult.state
+                                )
+                            )
                         }
                         detailResult is Resource.Error || positionResult is Resource.Error -> {
-                            _uiStatePosition.emit(Resource.Error("Error Message",positionResult.state))
+                            _uiStatePosition.emit(
+                                Resource.Error(
+                                    "Error Message",
+                                    positionResult.state
+                                )
+                            )
                         }
                         else -> {
                             _uiStatePosition.emit(Resource.Loading(UIStatus.LOADING))
@@ -83,6 +103,7 @@ class SatelliteDetailViewModel @Inject constructor(
                 satelliteDetailUiData.first_flight,
                 satelliteDetailUiData.height,
                 satelliteDetailUiData.mass
-            ))
+            )
+        )
     }
 }

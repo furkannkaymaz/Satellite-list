@@ -9,5 +9,6 @@
     <string name="heightMass">Height/Mass</string>
     <string name="cost">Cost</string>
     <string name="lastPosition">LastPosition</string>
+    <string name="ivStatus">status</string>
 
 </resources>
