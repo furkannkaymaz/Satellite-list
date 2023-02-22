@@ -28,7 +28,6 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-
 @ExperimentalCoroutinesApi
 class SatelliteDetailViewModelTest {
 
@@ -143,7 +142,7 @@ class SatelliteDetailViewModelTest {
     }
 
     @Test
-    fun `when result`() = runTest{
+    fun `when save data cache is return success `() = runTest{
         val data = getSatelliteDetailFakeData(1)
 
         whenever(mockDao.insertSatelliteDetail(data)).thenReturn(Unit)
