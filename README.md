@@ -6,11 +6,11 @@ The following technologies were used in this project:
 
 - Kotlin
 - MVVM architecture
-- Clean Architecture approach
-- Android Navigation library
-- Mockito library 
+- Clean Architecture 
+- Navigation 
+- Mockito 
 - Kotlin Coroutines 
 - Flow
 - Custom views 
-- Room library 
-- Hilt library 
+- Room 
+- Hilt
