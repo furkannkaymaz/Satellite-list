@@ -11,7 +11,7 @@ class FakeSatelliteRepository(private var data: List<SatelliteModel>) : Satellit
                 Resource.Error("Error", UIStatus.ERROR)
             }
             else -> {
-                Resource.Success(data, UIStatus.ERROR)
+                Resource.Success(data, UIStatus.SUCCESS)
             }
         }
     }
