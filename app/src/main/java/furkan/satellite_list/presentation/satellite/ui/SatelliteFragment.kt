@@ -29,7 +29,7 @@ class SatelliteFragment : BaseFragment<FragmentSatelliteBinding, SatelliteViewMo
 
     override val viewModel: SatelliteViewModel by viewModels()
 
-    private lateinit var satelliteAdapter: SatelliteAdapter
+    @Inject lateinit var satelliteAdapter: SatelliteAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +56,6 @@ class SatelliteFragment : BaseFragment<FragmentSatelliteBinding, SatelliteViewMo
 
     private fun setAdapter() {
 
-        satelliteAdapter = SatelliteAdapter()
         satelliteAdapter.setOnClick {
             goDetailPage(it.id, it.name)
         }
